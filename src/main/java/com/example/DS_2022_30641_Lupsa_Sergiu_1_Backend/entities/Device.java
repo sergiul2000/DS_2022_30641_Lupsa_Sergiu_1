@@ -24,14 +24,15 @@ public class Device {
     @Type(type = "uuid-binary")
     private UUID id;
 
-    @Column(name="name", nullable = false)
-    private String name;
+    @Column(name="address", nullable = false)
+    private String address;
 
-    @Column(name = "serial_nr",nullable = false)
-    private int serial_nr;
+    @Column(name="description", nullable = false)
+    private String description;
 
-    @Column(name = "consumption",nullable = false)
-    private float consumption;
+    @Column(name = "maxim_hourly_energy",nullable = false)
+    private int maxim_hourly_energy;
+
 
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Consumption> consumptionList=new ArrayList<>();

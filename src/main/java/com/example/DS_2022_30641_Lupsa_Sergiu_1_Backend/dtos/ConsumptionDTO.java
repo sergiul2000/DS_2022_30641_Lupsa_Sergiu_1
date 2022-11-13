@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.hateoas.RepresentationModel;
 
+import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -18,6 +19,7 @@ public class ConsumptionDTO extends RepresentationModel<ConsumptionDTO> {
 
     private UUID id;
     private float value;
+    private Date timestamp;
 
     @Override
     public boolean equals(Object o) {

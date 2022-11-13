@@ -7,5 +7,5 @@ import java.util.List;
 import java.util.UUID;
 
 public interface DeviceRepo extends JpaRepository<Device, UUID> {
-    List<Device> findByName(String name);
+//    List<Device> findById(UUID id);
 }

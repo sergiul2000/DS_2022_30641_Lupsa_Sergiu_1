@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UsersBuilder {
     public static UsersDTO toUserDTO(Users users){
-        return new UsersDTO( users.getId(),users.getName(), users.getAddress(), users.getAge(), users.getRole(),users.getDevices());
+        return new UsersDTO( users.getId(),users.getUsername(), users.getAddress(), users.getAge(), users.getRole(),users.getDevices());
     }
 
     public static Users toEntity(UsersDTO usersDTO) {

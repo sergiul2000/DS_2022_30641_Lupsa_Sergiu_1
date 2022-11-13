@@ -7,14 +7,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class DeviceBuilder {
     public static DeviceDTO toDeviceDTO(Device device){
-        return new DeviceDTO(device.getId(),device.getName(),device.getSerial_nr(),device.getConsumption(),device.getConsumptionList());
+        return new DeviceDTO(device.getId(),device.getAddress(),device.getDescription(),device.getMaxim_hourly_energy(),device.getConsumptionList());
     }
 
     public static Device toEntity(DeviceDTO deviceDTO) {
         return new Device(deviceDTO.getId(),
-                deviceDTO.getName(),
-                deviceDTO.getSerial_nr(),
-                deviceDTO.getConsumtion(),
+                deviceDTO.getAddress(),
+                deviceDTO.getDescription(),
+                deviceDTO.getMaxim_hourly_energy(),
                 deviceDTO.getConsumptionList());
     }
 }

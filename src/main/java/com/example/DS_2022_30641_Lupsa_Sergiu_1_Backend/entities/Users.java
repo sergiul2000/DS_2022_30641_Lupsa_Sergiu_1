@@ -28,8 +28,8 @@ public class Users {
     @Type(type = "uuid-binary")
     private UUID id;
 
-    @Column(name = "name", nullable = false,unique = true)//ca sa fie unica, mai pui in paranteze unique = true
-    private String name;
+    @Column(name = "username", nullable = false,unique = true)//ca sa fie unica, mai pui in paranteze unique = true
+    private String username;
 
     @Column(name = "address", nullable = false)//ca sa fie unica, mai pui in paranteze unique = true
     private String address;

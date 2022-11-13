@@ -17,9 +17,9 @@ import java.util.UUID;
 @NoArgsConstructor
 public class DeviceDTO extends RepresentationModel<DeviceDTO> {
     private UUID id;
-    private String name;
-    private int serial_nr;
-    private float consumtion;
+    private String address;
+    private String description;
+    private int maxim_hourly_energy;
     private List<Consumption> consumptionList;
 
     @Override
@@ -28,11 +28,11 @@ public class DeviceDTO extends RepresentationModel<DeviceDTO> {
         if (!(o instanceof DeviceDTO)) return false;
         if (!super.equals(o)) return false;
         DeviceDTO deviceDTO = (DeviceDTO) o;
-        return getSerial_nr() == deviceDTO.getSerial_nr() && Float.compare(deviceDTO.getConsumtion(), getConsumtion()) == 0 && Objects.equals(getId(), deviceDTO.getId()) && Objects.equals(getName(), deviceDTO.getName()) && Objects.equals(getConsumptionList(), deviceDTO.getConsumptionList());
+        return getMaxim_hourly_energy() == deviceDTO.getMaxim_hourly_energy() && Objects.equals(getId(), deviceDTO.getId()) && Objects.equals(getAddress(), deviceDTO.getAddress()) && Objects.equals(getDescription(), deviceDTO.getDescription()) && Objects.equals(getConsumptionList(), deviceDTO.getConsumptionList());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getId(), getName(), getSerial_nr(), getConsumtion(), getConsumptionList());
+        return Objects.hash(super.hashCode(), getId(), getAddress(), getDescription(), getMaxim_hourly_energy(), getConsumptionList());
     }
 }

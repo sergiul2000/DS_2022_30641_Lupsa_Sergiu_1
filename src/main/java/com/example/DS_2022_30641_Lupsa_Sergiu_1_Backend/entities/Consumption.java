@@ -8,6 +8,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -25,4 +26,6 @@ public class Consumption {
     @Column(name="value", nullable = false)
     private float value;
 
+    @Column(name="timestamp", nullable = false)
+    private Date timestamp;
 }
