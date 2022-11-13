@@ -1,11 +1,13 @@
 package com.example.DS_2022_30641_Lupsa_Sergiu_1_Backend.dtos;
 
+import com.example.DS_2022_30641_Lupsa_Sergiu_1_Backend.entities.Device;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.hateoas.RepresentationModel;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 @Getter
@@ -18,6 +20,7 @@ public class UsersDTO extends RepresentationModel<UsersDTO> {
     private String address;
     private int age;
     private int role;
+    private List<Device> deviceList;
 
     @Override
     public boolean equals(Object o) {

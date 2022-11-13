@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
@@ -18,30 +17,22 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Users {
-
-    private static final long serialVersionUID = 1L;
-
+public class Device {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Type(type = "uuid-binary")
     private UUID id;
 
-    @Column(name = "name", nullable = false,unique = true)//ca sa fie unica, mai pui in paranteze unique = true
+    @Column(name="name", nullable = false)
     private String name;
 
-    @Column(name = "address", nullable = false)//ca sa fie unica, mai pui in paranteze unique = true
-    private String address;
+    @Column(name = "serial_nr",nullable = false)
+    private int serial_nr;
 
-    @Column(name = "age", nullable = false)
-    private int age;
-
-    @Column(name = "role", nullable = false)
-    private int role;
-
-
+    @Column(name = "consumption",nullable = false)
+    private float consumption;
 
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<Device> devices=new ArrayList<>();
+    private List<Consumption> consumptionList=new ArrayList<>();
 }
