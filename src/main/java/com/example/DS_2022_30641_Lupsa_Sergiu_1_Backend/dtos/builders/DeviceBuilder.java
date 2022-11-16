@@ -1,8 +1,11 @@
 package com.example.DS_2022_30641_Lupsa_Sergiu_1_Backend.dtos.builders;
 
 import com.example.DS_2022_30641_Lupsa_Sergiu_1_Backend.dtos.DeviceDTO;
+import com.example.DS_2022_30641_Lupsa_Sergiu_1_Backend.entities.Consumption;
 import com.example.DS_2022_30641_Lupsa_Sergiu_1_Backend.entities.Device;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
 
 @NoArgsConstructor
 public class DeviceBuilder {
@@ -15,6 +18,7 @@ public class DeviceBuilder {
                 deviceDTO.getAddress(),
                 deviceDTO.getDescription(),
                 deviceDTO.getMaxim_hourly_energy(),
-                deviceDTO.getConsumptionList());
+                new ArrayList<Consumption>()
+        );
     }
 }
