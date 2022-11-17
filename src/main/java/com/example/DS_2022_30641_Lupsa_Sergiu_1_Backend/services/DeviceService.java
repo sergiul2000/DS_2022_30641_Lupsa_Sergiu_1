@@ -56,5 +56,17 @@ public class DeviceService {
         return device.getId();
     }
 
+    public void delete(UUID id) {
+        deviceRepo.deleteById(id);
+    }
 
+    public UUID updateDevice(UUID id,DeviceDTO deviceDTO){
+        Device device = deviceRepo.findById(id).orElseThrow(RuntimeException::new);
+        device.setDescription(deviceDTO.getDescription());
+        device.setAddress(deviceDTO.getAddress());
+        device.setMaxim_hourly_energy(deviceDTO.getMaxim_hourly_energy());
+        deviceRepo.save(device);
+
+        return device.getId();
+    }
 }

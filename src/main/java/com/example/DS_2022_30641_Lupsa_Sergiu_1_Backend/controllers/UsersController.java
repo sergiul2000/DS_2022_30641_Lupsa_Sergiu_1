@@ -64,5 +64,5 @@ public class UsersController {
     public ResponseEntity<UUID> updateProsumer(@PathVariable("id") UUID userId, @Valid @RequestBody UsersDTO usersDTO) {
         UUID usersId = usersService.updateUser(userId,usersDTO);
         return new ResponseEntity<>(usersId, HttpStatus.OK);
-    }
+    }   
 }

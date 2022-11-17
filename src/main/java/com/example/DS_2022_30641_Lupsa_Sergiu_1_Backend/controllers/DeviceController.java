@@ -1,9 +1,7 @@
 package com.example.DS_2022_30641_Lupsa_Sergiu_1_Backend.controllers;
 
 import com.example.DS_2022_30641_Lupsa_Sergiu_1_Backend.dtos.DeviceDTO;
-import com.example.DS_2022_30641_Lupsa_Sergiu_1_Backend.dtos.UsersDTO;
 import com.example.DS_2022_30641_Lupsa_Sergiu_1_Backend.services.DeviceService;
-import com.example.DS_2022_30641_Lupsa_Sergiu_1_Backend.services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
@@ -50,6 +48,17 @@ public class DeviceController {
     public ResponseEntity<DeviceDTO> getDevices(@PathVariable("id") UUID deviceId) {
         DeviceDTO dto = deviceService.findDeviceById(deviceId);
         return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public void deleteUsers(@PathVariable("id") UUID deviceId) {
+        deviceService.delete(deviceId);
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<UUID> updateProsumer(@PathVariable("id") UUID deviceId, @Valid @RequestBody DeviceDTO deviceDTO) {
+        UUID usersId = deviceService.updateDevice(deviceId,deviceDTO);
+        return new ResponseEntity<>(usersId, HttpStatus.OK);
     }
 
 }

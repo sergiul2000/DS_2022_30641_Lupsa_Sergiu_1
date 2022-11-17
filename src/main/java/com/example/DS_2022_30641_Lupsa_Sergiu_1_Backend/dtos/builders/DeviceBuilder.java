@@ -10,7 +10,7 @@ import java.util.ArrayList;
 @NoArgsConstructor
 public class DeviceBuilder {
     public static DeviceDTO toDeviceDTO(Device device){
-        return new DeviceDTO(device.getId(),device.getAddress(),device.getDescription(),device.getMaxim_hourly_energy(),device.getConsumptionList());
+        return new DeviceDTO(device.getId(),device.getAddress(),device.getDescription(),device.getMaxim_hourly_energy());
     }
 
     public static Device toEntity(DeviceDTO deviceDTO) {

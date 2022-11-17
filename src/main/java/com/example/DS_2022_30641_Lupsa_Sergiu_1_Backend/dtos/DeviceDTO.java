@@ -20,7 +20,8 @@ public class DeviceDTO extends RepresentationModel<DeviceDTO> {
     private String address;
     private String description;
     private int maxim_hourly_energy;
-    private List<Consumption> consumptionList;
+    //private List<Consumption> consumptionList;
+
 
     @Override
     public boolean equals(Object o) {
@@ -28,11 +29,11 @@ public class DeviceDTO extends RepresentationModel<DeviceDTO> {
         if (!(o instanceof DeviceDTO)) return false;
         if (!super.equals(o)) return false;
         DeviceDTO deviceDTO = (DeviceDTO) o;
-        return getMaxim_hourly_energy() == deviceDTO.getMaxim_hourly_energy() && Objects.equals(getId(), deviceDTO.getId()) && Objects.equals(getAddress(), deviceDTO.getAddress()) && Objects.equals(getDescription(), deviceDTO.getDescription()) && Objects.equals(getConsumptionList(), deviceDTO.getConsumptionList());
+        return getMaxim_hourly_energy() == deviceDTO.getMaxim_hourly_energy() && Objects.equals(getId(), deviceDTO.getId()) && Objects.equals(getAddress(), deviceDTO.getAddress()) && Objects.equals(getDescription(), deviceDTO.getDescription());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getId(), getAddress(), getDescription(), getMaxim_hourly_energy(), getConsumptionList());
+        return Objects.hash(super.hashCode(), getId(), getAddress(), getDescription(), getMaxim_hourly_energy());
     }
 }
