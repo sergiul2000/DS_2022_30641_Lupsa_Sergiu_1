@@ -12,8 +12,6 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-
 @RestController
 @CrossOrigin
 @RequestMapping(value = "/users")
@@ -62,7 +60,7 @@ public class UsersController {
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<UUID> updateProsumer(@PathVariable("id") UUID userId, @Valid @RequestBody UsersDTO usersDTO) {
-        UUID usersId = usersService.updateUser(userId,usersDTO);
-        return new ResponseEntity<>(usersId, HttpStatus.OK);
+        userId = usersService.updateUser(userId,usersDTO);
+        return new ResponseEntity<>(userId, HttpStatus.OK);
     }   
 }

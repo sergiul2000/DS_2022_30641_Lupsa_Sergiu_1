@@ -57,8 +57,8 @@ public class DeviceController {
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<UUID> updateProsumer(@PathVariable("id") UUID deviceId, @Valid @RequestBody DeviceDTO deviceDTO) {
-        UUID usersId = deviceService.updateDevice(deviceId,deviceDTO);
-        return new ResponseEntity<>(usersId, HttpStatus.OK);
+        deviceId = deviceService.updateDevice(deviceId,deviceDTO);
+        return new ResponseEntity<>(deviceId, HttpStatus.OK);
     }
 
 }
