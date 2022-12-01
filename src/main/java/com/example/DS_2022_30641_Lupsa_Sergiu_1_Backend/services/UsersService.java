@@ -43,14 +43,27 @@ public class UsersService {
         }
         return UsersBuilder.toUserDTO(prosumerOptional.get());
     }
-//    public UsersDTO findUserByUsername(String username) {
-//        Optional<Users> prosumerOptional = usersRepo.findUsersByUsername(username);
-//        if (!prosumerOptional.isPresent()) {
-//            LOGGER.error("User with username {} was not found in db", username);
-//            throw new ResourceNotFoundException(Users.class.getSimpleName() + " with username: " + username);
-//        }
-//        return UsersBuilder.toUserDTO(prosumerOptional.get());
-//    }
+    public UsersDTO findUserByUsername(String username) {
+        Optional<Users> prosumerOptional = usersRepo.findUsersByUsername(username);
+        if (!prosumerOptional.isPresent()) {
+            LOGGER.error("User with username {} was not found in db", username);
+            throw new ResourceNotFoundException(Users.class.getSimpleName() + " with username: " + username);
+        }
+        return UsersBuilder.toUserDTO(prosumerOptional.get());
+    }
+    public UsersDTO loginFunction(String username,String password) {
+        Optional<Users> prosumerOptional = usersRepo.findUsersByUsername(username);
+        if (!prosumerOptional.isPresent()) {
+            LOGGER.error("User with username {} was not found in db", username);
+            throw new ResourceNotFoundException(Users.class.getSimpleName() + " with username: " + username);
+        }
+        if(!password.equals(UsersBuilder.toUserDTO(prosumerOptional.get()).getPassword())) {
+            LOGGER.error("User with this password for this username {} was not found in db", username);
+            throw new ResourceNotFoundException(Users.class.getSimpleName() + " with username: " + username);
+        }
+        return UsersBuilder.toUserDTO(prosumerOptional.get());
+    }
+
 
     public UUID insert(UsersDTO usersDTO) {
         Users users = UsersBuilder.toEntity(usersDTO);

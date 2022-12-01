@@ -1,5 +1,6 @@
 package com.example.DS_2022_30641_Lupsa_Sergiu_1_Backend.controllers;
 
+import com.example.DS_2022_30641_Lupsa_Sergiu_1_Backend.dtos.LoginDTO;
 import com.example.DS_2022_30641_Lupsa_Sergiu_1_Backend.dtos.UsersDTO;
 import com.example.DS_2022_30641_Lupsa_Sergiu_1_Backend.services.UsersService;
 //import jdk.internal.net.http.common.Logger;
@@ -47,11 +48,11 @@ public class UsersController {
         UsersDTO dto = usersService.findUserById(userId);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
-//    @GetMapping(value = "/{username}")
-//    public ResponseEntity<UsersDTO> getUsersByUsername(@PathVariable("username") UUID userId) {
-//        UsersDTO dto = usersService.findUserByU(userId);
-//        return new ResponseEntity<>(dto, HttpStatus.OK);
-//    }
+    @GetMapping(value = "/{username}")
+    public ResponseEntity<UsersDTO> getUsersByUsername(@PathVariable("username") String username) {
+        UsersDTO dto = usersService.findUserByUsername(username);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
 
     @DeleteMapping(value = "/{id}")
     public void deleteUsers(@PathVariable("id") UUID userId) {
@@ -62,5 +63,14 @@ public class UsersController {
     public ResponseEntity<UUID> updateProsumer(@PathVariable("id") UUID userId, @Valid @RequestBody UsersDTO usersDTO) {
         userId = usersService.updateUser(userId,usersDTO);
         return new ResponseEntity<>(userId, HttpStatus.OK);
-    }   
+    }
+
+    @PostMapping(value = "/login")
+    public ResponseEntity<UsersDTO> login(@RequestBody LoginDTO loginDTO) {
+        UsersDTO users = usersService.loginFunction(loginDTO.getUsername(),loginDTO.getPassword());
+        if(users==null)
+            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
 }
