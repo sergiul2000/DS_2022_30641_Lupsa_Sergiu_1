@@ -1,7 +1,10 @@
 package com.example.DS_2022_30641_Lupsa_Sergiu_1_Backend.controllers;
 
+import com.example.DS_2022_30641_Lupsa_Sergiu_1_Backend.dtos.DeviceDTO;
 import com.example.DS_2022_30641_Lupsa_Sergiu_1_Backend.dtos.LoginDTO;
 import com.example.DS_2022_30641_Lupsa_Sergiu_1_Backend.dtos.UsersDTO;
+import com.example.DS_2022_30641_Lupsa_Sergiu_1_Backend.entities.Users;
+import com.example.DS_2022_30641_Lupsa_Sergiu_1_Backend.services.DeviceService;
 import com.example.DS_2022_30641_Lupsa_Sergiu_1_Backend.services.UsersService;
 //import jdk.internal.net.http.common.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -19,10 +23,12 @@ import java.util.UUID;
 public class UsersController {
 
     private final UsersService usersService;
+    private final DeviceService deviceService;
 
     @Autowired
-    public UsersController(UsersService usersService){
+    public UsersController(UsersService usersService,DeviceService deviceService){
         this.usersService=usersService;
+        this.deviceService=deviceService;
     }
 
     @GetMapping()
@@ -38,8 +44,10 @@ public class UsersController {
     }
 
     @PostMapping()//(value = "/insert")
-    public ResponseEntity<UUID> insertProsumer(@Valid @RequestBody UsersDTO usersDTO) {
+    public ResponseEntity<UUID> insertProsumer(@Valid @RequestBody UsersDTO usersDTO){
         UUID usersId = usersService.insert(usersDTO);
+        if(usersId==null)
+            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(usersId, HttpStatus.CREATED);
     }
 
@@ -72,5 +80,29 @@ public class UsersController {
             return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
 
         return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+    @GetMapping(value = "/getClientDevices/{id}")
+    public ResponseEntity<List<DeviceDTO>> getClientDevices(@PathVariable("id") UUID id){
+        List<DeviceDTO> listaDevices = usersService.getClientDevices(id);
+        if(listaDevices.size()!=0)
+            return new ResponseEntity<>(listaDevices,HttpStatus.OK);
+        return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+    }
+
+//    @PostMapping(value = "/addDeviceToClient")
+//    public ResponseEntity<UUID> addDeviceToClient(@PathVariable String username,@PathVariable  UUID deviceId){
+//        Optional<Users> usersDTO = usersService.findUserByUsername(username);
+//        UUID deviceId = deviceService.insert(deviceDTO);
+////        usersDTO
+//        return new ResponseEntity<>(deviceId, HttpStatus.CREATED);
+//    }
+
+    @PutMapping(value = "/addDeviceToClient/{clientId}")
+    public ResponseEntity<Boolean> addDeviceToClient(@PathVariable UUID clientId,@RequestBody  DeviceDTO deviceDTO)
+    {
+        boolean response = usersService.addDeviceToClient(clientId,deviceDTO);
+        if(response)
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 }

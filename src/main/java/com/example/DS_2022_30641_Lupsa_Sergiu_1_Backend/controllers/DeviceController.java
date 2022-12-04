@@ -1,5 +1,6 @@
 package com.example.DS_2022_30641_Lupsa_Sergiu_1_Backend.controllers;
 
+import com.example.DS_2022_30641_Lupsa_Sergiu_1_Backend.dtos.ConsumptionDTO;
 import com.example.DS_2022_30641_Lupsa_Sergiu_1_Backend.dtos.DeviceDTO;
 import com.example.DS_2022_30641_Lupsa_Sergiu_1_Backend.services.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,4 +62,19 @@ public class DeviceController {
         return new ResponseEntity<>(deviceId, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/getDeviceConsumptions/{id}")
+    public ResponseEntity<List<ConsumptionDTO>> getDeviceConsumtions(@PathVariable("id") UUID id){
+        List<ConsumptionDTO> listaConsumption = deviceService.getDeviceConsumtions(id);
+        if(listaConsumption.size()!=0)
+            return new ResponseEntity<>(listaConsumption,HttpStatus.OK);
+        return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+    }
+    @PutMapping(value = "/addConsumptionToDevice/{deviceId}")
+    public ResponseEntity<Boolean> addConsumptionToDevice(@PathVariable UUID deviceId,@RequestBody  ConsumptionDTO consumptionDTO)
+    {
+        boolean response = deviceService.addConsumptionToDevice(deviceId,consumptionDTO);
+        if(response)
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    }
 }

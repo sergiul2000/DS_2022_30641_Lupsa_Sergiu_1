@@ -1,6 +1,5 @@
 package com.example.DS_2022_30641_Lupsa_Sergiu_1_Backend.dtos;
 
-import com.example.DS_2022_30641_Lupsa_Sergiu_1_Backend.entities.Consumption;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
