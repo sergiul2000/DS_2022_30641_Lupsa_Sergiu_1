@@ -1,5 +1,6 @@
 package com.example.DS_2022_30641_Lupsa_Sergiu_1_Backend.controllers;
 
+import com.example.DS_2022_30641_Lupsa_Sergiu_1_Backend.dtos.ConsumptionDTO;
 import com.example.DS_2022_30641_Lupsa_Sergiu_1_Backend.dtos.DeviceDTO;
 import com.example.DS_2022_30641_Lupsa_Sergiu_1_Backend.dtos.LoginDTO;
 import com.example.DS_2022_30641_Lupsa_Sergiu_1_Backend.dtos.UsersDTO;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -56,7 +58,7 @@ public class UsersController {
         UsersDTO dto = usersService.findUserById(userId);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
-    @GetMapping(value = "/{username}")
+    @GetMapping(value = "/username/{username}")
     public ResponseEntity<UsersDTO> getUsersByUsername(@PathVariable("username") String username) {
         UsersDTO dto = usersService.findUserByUsername(username);
         return new ResponseEntity<>(dto, HttpStatus.OK);
@@ -86,6 +88,22 @@ public class UsersController {
         List<DeviceDTO> listaDevices = usersService.getClientDevices(id);
         if(listaDevices.size()!=0)
             return new ResponseEntity<>(listaDevices,HttpStatus.OK);
+        return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+    }
+    @GetMapping(value = "/getClientConsumtions/{id}")
+    public ResponseEntity<List<ConsumptionDTO>> getClientConsumtions(@PathVariable("id") UUID id){
+        List<ConsumptionDTO> listaConsumptionUser=new ArrayList<ConsumptionDTO>();
+        List<DeviceDTO> listaDevices = usersService.getClientDevices(id);
+        if(listaDevices.size()!=0){
+            for(DeviceDTO deviceDTO:listaDevices){
+
+                List<ConsumptionDTO> listaConsumption = deviceService.getDeviceConsumtions(deviceDTO.getId());
+                if(listaConsumption.size()!=0){
+                    listaConsumptionUser.addAll(listaConsumption);
+                }
+            }
+            return new ResponseEntity<>(listaConsumptionUser,HttpStatus.OK);
+        }
         return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
     }
 
