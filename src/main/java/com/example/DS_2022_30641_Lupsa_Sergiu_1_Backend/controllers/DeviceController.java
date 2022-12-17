@@ -52,7 +52,7 @@ public class DeviceController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public void deleteUsers(@PathVariable("id") UUID deviceId) {
+    public void deleteDevice(@PathVariable("id") UUID deviceId) {
         deviceService.delete(deviceId);
     }
 

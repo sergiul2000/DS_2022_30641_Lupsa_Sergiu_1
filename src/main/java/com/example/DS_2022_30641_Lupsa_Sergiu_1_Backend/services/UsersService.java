@@ -128,5 +128,22 @@ public class UsersService {
         usersRepo.save(user);
         return true;
     }
+    public Boolean deleteDeviceOfClient(UUID clientId,   UUID deviceId){
+        Optional<Users> usersOptional = usersRepo.findById(clientId);
+        Optional<Device> deviceOptional = deviceRepo.findById(deviceId);
+//        Device device = DeviceBuilder.toEntity(deviceDTO);
+        LOGGER.debug("Device with id {} was deleted in db", deviceId);
+        if(!usersOptional.isPresent() || !deviceOptional.isPresent() ) return false;
+
+        Users user = usersOptional.get();
+        Device device = deviceOptional.get();
+
+        user.getDevices().remove(device);
+        usersRepo.save(user);
+
+        deviceRepo.deleteById(deviceId);
+        return true;
+    }
+
 
 }

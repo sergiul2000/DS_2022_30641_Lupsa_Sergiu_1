@@ -123,4 +123,12 @@ public class UsersController {
             return new ResponseEntity<>(response, HttpStatus.OK);
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
+    @DeleteMapping(value = "/deleteDeviceOfClient/{clientId}/{deviceId}")
+    public ResponseEntity<Boolean> deleteDeviceOfClient(@PathVariable UUID clientId,@PathVariable UUID deviceId)
+    {
+        boolean response = usersService.deleteDeviceOfClient(clientId,deviceId);
+        if(response)
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    }
 }
