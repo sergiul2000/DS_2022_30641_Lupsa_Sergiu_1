@@ -99,6 +99,7 @@ public class UsersService {
         user.setRole(usersDTO.getRole());
         user.setAddress((usersDTO.getAddress()));
         user.setPassword(usersDTO.getPassword());
+        user.setAge(usersDTO.getAge());
         usersRepo.save(user);
 
         return user.getId();

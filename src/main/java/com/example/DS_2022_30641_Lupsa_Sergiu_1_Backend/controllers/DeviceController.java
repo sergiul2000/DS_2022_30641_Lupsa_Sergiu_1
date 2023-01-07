@@ -69,7 +69,7 @@ public class DeviceController {
             return new ResponseEntity<>(listaConsumption,HttpStatus.OK);
         return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
     }
-    @PutMapping(value = "/addConsumptionToDevice/{deviceId}")
+        @PutMapping(value = "/addConsumptionToDevice/{deviceId}")
     public ResponseEntity<Boolean> addConsumptionToDevice(@PathVariable UUID deviceId,@RequestBody  ConsumptionDTO consumptionDTO)
     {
         boolean response = deviceService.addConsumptionToDevice(deviceId,consumptionDTO);

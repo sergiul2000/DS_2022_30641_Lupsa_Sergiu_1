@@ -126,6 +126,7 @@ public class UsersController {
     @DeleteMapping(value = "/deleteDeviceOfClient/{clientId}/{deviceId}")
     public ResponseEntity<Boolean> deleteDeviceOfClient(@PathVariable UUID clientId,@PathVariable UUID deviceId)
     {
+        System.out.println("aici");
         boolean response = usersService.deleteDeviceOfClient(clientId,deviceId);
         if(response)
             return new ResponseEntity<>(response, HttpStatus.OK);
