@@ -16,6 +16,7 @@ import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -98,6 +99,52 @@ public class DeviceService {
         device.getConsumptionList().add(consumption);
         deviceRepo.save(device);
         return true;
+    }
+
+    public Boolean createConsumptionFromRabbitMQ(String msg){
+        System.out.println(msg);
+        String arr[] = msg.split(":\"");
+
+        //cod doar pentru a intelege ce e aici
+        int index=0;
+        for(String  c:arr){
+            System.out.println(c+" ,index= "+index);
+            index++;
+        }
+
+        //getting measured value from message
+        String measuredValueSplit[] = arr[1].split("\"");
+        String measuredValueString = measuredValueSplit[0];
+        Float measuredValue= Float.parseFloat(measuredValueString);
+        System.out.println("measured value is "+measuredValue);
+
+        //getting device's id value from message
+        String deviceIdSplit[] = arr[2].split("\"");
+        String deviceIdString = deviceIdSplit[0];
+        UUID deviceId= UUID.fromString(deviceIdString);
+        System.out.println("UUID is "+deviceId);
+
+        //getting timestamp value from message
+        String timestampSplit[] = arr[3].split("\"");
+        String timestampString = timestampSplit[0];
+        int year=Integer.parseInt(timestampString.substring(0,4));
+        int month=Integer.parseInt(timestampString.substring(5,7));
+        int day=Integer.parseInt(timestampString.substring(8,10));
+//        System.out.println(year+""+month+""+day);
+
+        int hour=Integer.parseInt(timestampString.substring(11,13));
+        int min=Integer.parseInt(timestampString.substring(14,16));
+        int sec=Integer.parseInt(timestampString.substring(17,19));
+
+//        System.out.println(hour+""+min+""+sec);
+
+        LocalDateTime timestamp= LocalDateTime.of(year,month,day,hour,min,sec);
+//        System.out.println(timestamp);
+        System.out.println("Timestamp is "+timestamp);
+//        System.out.println(new ConsumptionDTO(measuredValue,timestamp).getId());
+        Boolean returnValue=addConsumptionToDevice(deviceId,new ConsumptionDTO(measuredValue,timestamp));
+//        Boolean returnValue=true;
+        return returnValue;
     }
 
 }

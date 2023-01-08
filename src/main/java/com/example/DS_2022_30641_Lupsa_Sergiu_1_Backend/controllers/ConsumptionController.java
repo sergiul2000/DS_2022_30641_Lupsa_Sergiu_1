@@ -1,6 +1,7 @@
 package com.example.DS_2022_30641_Lupsa_Sergiu_1_Backend.controllers;
 
 import com.example.DS_2022_30641_Lupsa_Sergiu_1_Backend.dtos.ConsumptionDTO;
+import com.example.DS_2022_30641_Lupsa_Sergiu_1_Backend.repositories.DeviceRepo;
 import com.example.DS_2022_30641_Lupsa_Sergiu_1_Backend.services.ConsumptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
@@ -9,6 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -60,6 +64,7 @@ public class ConsumptionController {
         consumptionId = consumptionService.updateConsumption(consumptionId,consumptionDTO);
         return new ResponseEntity<>(consumptionId, HttpStatus.OK);
     }
+
 
 
 }

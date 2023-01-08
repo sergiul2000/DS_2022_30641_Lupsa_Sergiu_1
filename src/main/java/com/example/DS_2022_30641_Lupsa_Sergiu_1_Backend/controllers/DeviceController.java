@@ -3,6 +3,7 @@ package com.example.DS_2022_30641_Lupsa_Sergiu_1_Backend.controllers;
 import com.example.DS_2022_30641_Lupsa_Sergiu_1_Backend.dtos.ConsumptionDTO;
 import com.example.DS_2022_30641_Lupsa_Sergiu_1_Backend.dtos.DeviceDTO;
 import com.example.DS_2022_30641_Lupsa_Sergiu_1_Backend.services.DeviceService;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
@@ -76,5 +77,14 @@ public class DeviceController {
         if(response)
             return new ResponseEntity<>(response, HttpStatus.OK);
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    }
+
+
+    @RabbitListener(queues = "sensor")
+    public void getMessage(String msg){
+
+        Boolean response=deviceService.createConsumptionFromRabbitMQ(msg);
+        System.out.println(response);
+
     }
 }

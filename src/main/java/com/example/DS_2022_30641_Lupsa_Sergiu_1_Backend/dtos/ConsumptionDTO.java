@@ -22,6 +22,11 @@ public class ConsumptionDTO extends RepresentationModel<ConsumptionDTO> {
     private float value;
     private LocalDateTime timestamp;
 
+    public ConsumptionDTO(float value, LocalDateTime timestamp) {
+        this.value = value;
+        this.timestamp = timestamp;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
