@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -30,6 +31,9 @@ public class DeviceService {
     private static final Logger LOGGER = LoggerFactory.getLogger(DeviceService.class);
     private final DeviceRepo deviceRepo;
     private final ConsumptionRepo consumptionRepo;
+
+    @Autowired
+    SimpMessagingTemplate template;
 
 
     @Autowired
@@ -106,11 +110,11 @@ public class DeviceService {
         String arr[] = msg.split(":\"");
 
         //cod doar pentru a intelege ce e aici
-        int index=0;
-        for(String  c:arr){
-            System.out.println(c+" ,index= "+index);
-            index++;
-        }
+//        int index=0;
+//        for(String  c:arr){
+//            System.out.println(c+" ,index= "+index);
+//            index++;
+//        }
 
         //getting measured value from message
         String measuredValueSplit[] = arr[1].split("\"");
@@ -118,11 +122,20 @@ public class DeviceService {
         Float measuredValue= Float.parseFloat(measuredValueString);
         System.out.println("measured value is "+measuredValue);
 
+
         //getting device's id value from message
         String deviceIdSplit[] = arr[2].split("\"");
         String deviceIdString = deviceIdSplit[0];
         UUID deviceId= UUID.fromString(deviceIdString);
         System.out.println("UUID is "+deviceId);
+
+        //check if the value is
+        float deviceMaxHourlyConsumption=findDeviceById(deviceId).getMaxim_hourly_energy();
+        if(measuredValue>deviceMaxHourlyConsumption){
+            System.out.println("over the max hourly value!");
+            String destination = "/topic/message";
+            template.convertAndSend(destination, "Valoarea maxima pe ora a unui contor a fost depasita!");
+        }
 
         //getting timestamp value from message
         String timestampSplit[] = arr[3].split("\"");
